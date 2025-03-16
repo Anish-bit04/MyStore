@@ -19,33 +19,30 @@ app.use(async (req, res, next) => {
     const decision = await arcjetMiddleware.protect(req, {
       requested: 1, // each request consume 1 token
     });
+   
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
-        res.status(429).json({
-          error: "Rate limit exceeded",
-        });
+        res.status(429).json({ error: "Too Many Requests" });
       } else if (decision.reason.isBot()) {
-        res.status(403).json({
-          error: "Bot detected",
-        });
+        res.status(403).json({ error: "Bot access denied" });
       } else {
-        res.status(403).json({
-          error: "Access denied",
-        });
+        res.status(403).json({ error: "Forbidden" });
       }
-      return ;
+      return;
     }
 
     // check for spoofed bots
-    if(decision.results.some((result) => result.isBot() && result.reason.isSpoofed())) {
+    if(decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
         res.status(403).json({
             error: "Spoofed bot detected",
         })
+        return
     }
     next()
   } catch (error) {
     console.log("Error in arcjetMiddleware", error);
     res.status(500).json(error);
+    next(error)
   }
 });
 app.use("/api/product", productRoutes);

@@ -7,7 +7,7 @@ export const arcjetMiddleware = arcjet({
     characteristics:["ip.src"],
     rules:[
         shield({mode:"LIVE"}),
-        detectBot({mode:"LIVE",
+        detectBot({mode:"DRY_RUN",
             // block all bots expect search engines
             allow:[
                 "CATEGORY:SEARCH_ENGINE"
