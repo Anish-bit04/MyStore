@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import productRoutes from "./routes/productRoute.js";
 import { arcjetMiddleware } from "./lib/arcjet.js";
+import { sql } from "./config/db.js";
 const app = express();
 
 dotenv.config();
