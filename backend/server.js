@@ -5,9 +5,11 @@ import morgan from "morgan";
 import productRoutes from "./routes/productRoute.js";
 import { arcjetMiddleware } from "./lib/arcjet.js";
 import { sql } from "./config/db.js";
+import cors from "cors";
 const app = express();
 
 dotenv.config();
+app.use(cors())
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
