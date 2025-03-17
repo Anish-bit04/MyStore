@@ -6,15 +6,22 @@ import productRoutes from "./routes/productRoute.js";
 import { arcjetMiddleware } from "./lib/arcjet.js";
 import { sql } from "./config/db.js";
 import cors from "cors";
+import path from "path";
+
 const app = express();
 
 dotenv.config();
 app.use(cors())
 app.use(express.json());
-app.use(helmet());
+app.use(helmet(
+  {
+    contentSecurityPolicy: false,
+  }
+));
 app.use(morgan("dev"));
 
 const PORT = process.env.PORT;
+const __dirname = path.resolve();
 
 app.use(async (req, res, next) => {
   try {
@@ -48,6 +55,14 @@ app.use(async (req, res, next) => {
   }
 });
 app.use("/api/product", productRoutes);
+
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    })
+}
 
 async function initDB() {
   try {

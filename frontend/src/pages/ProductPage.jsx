@@ -82,7 +82,7 @@ function ProductPage() {
                   type="text"
                   placeholder="Enter product name"
                   className="input input-bordered w-full"
-                  value={formData.name}
+                  value={formData?.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
@@ -98,7 +98,7 @@ function ProductPage() {
                   step="0.01"
                   placeholder="0.00"
                   className="input input-bordered w-full"
-                  value={formData.price}
+                  value={formData?.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 />
               </div>
@@ -112,7 +112,7 @@ function ProductPage() {
                   type="text"
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full"
-                  value={formData.image}
+                  value={formData?.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                 />
               </div>
@@ -127,7 +127,7 @@ function ProductPage() {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  disabled={loading || !formData.name || !formData.price || !formData.image}
+                  disabled={loading || !formData?.name || !formData?.price || !formData?.image}
                 >
                   {loading ? (
                     <span className="loading loading-spinner loading-sm" />

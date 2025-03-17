@@ -14,9 +14,9 @@ export const arcjetMiddleware = arcjet({
             ]
         }),
         tokenBucket({mode:"LIVE",
-            refillRate:5,
-            interval:10,
-            capacity:10
+            refillRate:10,
+            interval:5,
+            capacity:15
         })
         // almost 10 request in 4 sec.
     ]
